@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_tutorial/blocs/client_bloc.dart';
 import 'package:flutter_bloc_tutorial/blocs/client_events.dart';
 import 'package:flutter_bloc_tutorial/blocs/client_state.dart';
-import 'package:flutter_bloc_tutorial/models/client.dart';
 
 class ClientsPage extends StatefulWidget {
   const ClientsPage({Key? key}) : super(key: key);
@@ -33,7 +32,8 @@ class _ClientsPageState extends State<ClientsPage> {
 
   String randomName() {
     final rand = Random();
-    return ['Maria Almeida', 'Vinicius Silva', 'Luiz Williams', 'Bianca Nevis'].elementAt(rand.nextInt(4));
+    return ['Maria Almeida', 'Vinicius Silva', 'Luiz Williams', 'Bianca Nevis']
+        .elementAt(rand.nextInt(4));
   }
 
   @override
@@ -45,45 +45,148 @@ class _ClientsPageState extends State<ClientsPage> {
           IconButton(
             icon: const Icon(Icons.person_add),
             onPressed: () {
-              bloc.add(AddClientEvent(client: Client(nome: randomName())));
+              // bloc.add(AddClientEvent(client: Client(nome: randomName())));
             },
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 24),
-        child: BlocBuilder<ClientBloc, ClientState>(
-            bloc: bloc,
-            builder: (context, state) {
-              if (state is ClientInitialState) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state is ClientSuccessState) {
-                final clientsList = state.clients;
-                return ListView.separated(
-                  itemCount: clientsList.length,
-                  itemBuilder: (context, index) => ListTile(
-                    leading: CircleAvatar(
-                      child: ClipRRect(
-                        child: Text(clientsList[index].nome.substring(0, 1)),
-                        borderRadius: BorderRadius.circular(50),
+      body: Center(
+        child: Column(
+          children: [
+            BlocBuilder<ClientBloc, ClientState>(
+                bloc: bloc,
+                builder: (context, state) {
+                  if (state is ClientInitialState) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is ClientSuccessState) {
+                    final clientsList = state.clients;
+                    return SizedBox(
+                      width: MediaQuery.sizeOf(context).width,
+                      height:
+                          500, // Defina uma altura fixa ou ajuste conforme necessário
+                      child: ListView.separated(
+                        itemCount: clientsList.length,
+                        itemBuilder: (context, index) => Table(
+                          // border: TableBorder.all(),
+                          children: [
+                            TableRow(
+                              children: [
+                                TableCell(
+                                  child: Center(
+                                      child:
+                                          Text(clientsList[index].numeroVenda)),
+                                ),
+                                TableCell(
+                                  child: Center(
+                                      child: Text(clientsList[index].vendedor)),
+                                ),
+                                TableCell(
+                                  child: Center(
+                                      child: Text(clientsList[index].data)),
+                                ),
+                                TableCell(
+                                  child: Center(
+                                      child:
+                                          Text(clientsList[index].entregueAte)),
+                                ),
+                              ],
+                            ),
+
+                            // Outras linhas de dados...
+                          ],
+                        ),
+                        separatorBuilder: (_, __) => const Divider(),
                       ),
-                    ),
-                    title: Text(clientsList[index].nome),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.remove),
-                      onPressed: () {
-                        bloc.add(RemoveClientEvent(client: clientsList[index]));
-                      },
-                    ),
-                  ),
-                  separatorBuilder: (_, __) => const Divider(),
-                );
-              }
-              return Container();
-            }),
+                    );
+                  }
+                  return Container();
+                }),
+          ],
+        ),
       ),
+    );
+  }
+}
+
+class ColunaTable extends StatelessWidget {
+  const ColunaTable({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Table(
+      // border: TableBorder.all(),
+      children: const [
+        TableRow(
+          children: [
+            TableCell(
+              child: Center(child: Text('NÚMERO OV')),
+            ),
+            TableCell(
+              child: Center(child: Text('VENDEDOR')),
+            ),
+            TableCell(
+              child: Center(child: Text('DATA')),
+            ),
+            TableCell(
+              child: Center(child: Text('FATURAMENTO')),
+            ),
+            TableCell(
+              child: Center(child: Text('ENTREGUE ATÉ')),
+            ),
+          ],
+        ),
+
+        // Outras linhas de dados...
+      ],
+    );
+  }
+}
+
+class OrdensTable extends StatelessWidget {
+  const OrdensTable({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Table(
+      // border: TableBorder.all(),
+      children: const [
+        TableRow(
+          children: [
+            TableCell(
+              child: Center(child: Text('NÚMERO OV')),
+            ),
+            TableCell(
+              child: Center(child: Text('VENDEDOR')),
+            ),
+            TableCell(
+              child: Center(child: Text('DATA')),
+            ),
+            TableCell(
+              child: Center(child: Text('ENTREGUE ATÉ')),
+            ),
+          ],
+        ),
+        TableRow(
+          children: [
+            TableCell(
+              child: Center(child: Text('0165165')),
+            ),
+            TableCell(
+              child: Center(child: Text('ELESIO OLIVEIRA')),
+            ),
+            TableCell(
+              child: Center(child: Text('10/12/2023')),
+            ),
+            TableCell(
+              child: Center(child: Text('30/12/2023')),
+            ),
+          ],
+        ),
+
+        // Outras linhas de dados...
+      ],
     );
   }
 }

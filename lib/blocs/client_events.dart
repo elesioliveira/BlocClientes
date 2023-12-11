@@ -5,7 +5,7 @@ abstract class ClientEvent {}
 class LoadClientEvent extends ClientEvent {}
 
 class AddClientEvent extends ClientEvent {
-  Client client;
+  Venda client;
 
   AddClientEvent({
     required this.client,
@@ -13,7 +13,7 @@ class AddClientEvent extends ClientEvent {
 }
 
 class RemoveClientEvent extends ClientEvent {
-  Client client;
+  Venda client;
 
   RemoveClientEvent({
     required this.client,

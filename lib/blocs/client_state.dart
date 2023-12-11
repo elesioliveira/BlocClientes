@@ -1,7 +1,7 @@
 import 'package:flutter_bloc_tutorial/models/client.dart';
 
 abstract class ClientState {
-  List<Client> clients;
+  List<Venda> clients;
 
   ClientState({
     required this.clients,
@@ -13,5 +13,5 @@ class ClientInitialState extends ClientState {
 }
 
 class ClientSuccessState extends ClientState {
-  ClientSuccessState({required List<Client> clients}) : super(clients: clients);
+  ClientSuccessState({required List<Venda> clients}) : super(clients: clients);
 }

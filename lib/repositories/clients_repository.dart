@@ -1,25 +1,46 @@
 import 'package:flutter_bloc_tutorial/models/client.dart';
 
 class ClientsRepository {
-  final List<Client> _clients = [];
+  List<Venda> vendas = [];
 
-  List<Client> loadClients() {
-    _clients.addAll([
-      Client(nome: 'José Armando'),
-      Client(nome: 'Anastácia Silva'),
-      Client(nome: 'Marineiva Gonçalvez'),
-      Client(nome: 'Bruno Marcondez'),
+  List<Venda> loadClients() {
+    vendas.addAll([
+      Venda(
+          numeroVenda: 'NUMERO OV',
+          vendedor: 'VENDEDOR',
+          data: 'DATA',
+          entregueAte: 'ENTREGUE ATE'),
+      Venda(
+          numeroVenda: '123564',
+          vendedor: 'Elesio',
+          data: '10/12/2023',
+          entregueAte: '30/12/2023'),
+      Venda(
+          numeroVenda: '123564',
+          vendedor: 'Joao',
+          data: '10/12/2023',
+          entregueAte: '30/12/2023'),
+      Venda(
+          numeroVenda: '123564',
+          vendedor: 'Adriano',
+          data: '10/12/2023',
+          entregueAte: '30/12/2023'),
+      Venda(
+          numeroVenda: '123564',
+          vendedor: 'Maria',
+          data: '10/12/2023',
+          entregueAte: '30/12/2023'),
     ]);
-    return _clients;
+    return vendas;
   }
 
-  List<Client> addClient(Client client) {
-    _clients.add(client);
-    return _clients;
+  List<Venda> addClient(Venda client) {
+    vendas.add(client);
+    return vendas;
   }
 
-  List<Client> removeClient(Client client) {
-    _clients.remove(client);
-    return _clients;
+  List<Venda> removeClient(Venda client) {
+    vendas.remove(client);
+    return vendas;
   }
 }
